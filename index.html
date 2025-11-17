@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Task Management App</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <meta name="description" content="Responsive Task Management Web App using Local Storage" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-grid">
+      <img class="logo" src="assets/Black___White_Minimalist_Business_Logo__1_-removebg-preview.png"> 
+      <nav aria-label="Main navigation">
+        <ul class="nav">
+          <li><a href="#homepage"><b>Home</b></a></li>
+          <li><a href="#add"><b>Add Task</b></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" id="homepage">
+    <section class="controls">
+      <div class="search-wrap">
+        <input id="searchInput" type="search" placeholder="Search by title or description..." aria-label="Search tasks">
+        <i class="fas fa-search search-icon"></i>
+      </div>
+
+      <div class="filters">
+        <select id="statusFilter" aria-label="Filter by status">
+          <option value="all">All status</option>
+          <option value="todo">To Do</option>
+          <option value="inprogress">In Progress</option>
+          <option value="completed">Completed</option>
+        </select>
+
+        <select id="priorityFilter" aria-label="Filter by priority">
+          <option value="all">All priorities</option>
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+
+        <input id="dateFilter" type="date" aria-label="Filter by due date" />
+        <button id="clearFilters" class="btn small">Clear</button>
+      </div>
+    </section>
+
+    <section class="add-task" id="add">
+      <h2>Add New Task</h2>
+      <form id="taskForm" novalidate>
+        <div class="form-row">
+          <label for="title">Title</label>
+          <input id="title" name="title" required maxlength="100" />
+        </div>
+
+        <div class="form-row">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" rows="3"></textarea>
+        </div>
+
+        <div class="form-row split">
+          <div>
+            <label for="dueDate">Due Date</label>
+            <input id="dueDate" name="dueDate" type="date" />
+          </div>
+
+          <div>
+            <label for="priority">Priority</label>
+            <select id="priority" name="priority" required>
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row split">
+          <div>
+            <label for="tags">Tags</label>
+            <input id="tags" name="tags" value="Urgent"/>
+          </div>
+          <div class="form-row">
+            <label for="tags">Reminder</label>
+            <input id="tags" name="tags" value="1 day before"/>
+          </div>
+        </div>
+
+        <div class="form-row actions">
+          <button id="addBtn" class="btn">Add Task</button>
+          <button type="reset" class="btn secondary">Reset</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="task-list-section">
+      <h2>Tasks</h2>
+      <div id="taskList" class="task-list" aria-live="polite"></div>
+      <p id="noTasks" class="muted">Your task list is empty. Add your first task to get started.</p>
+    </section>
+  </main>
+
+  <div id="editModal" class="modal" aria-hidden="true" role="dialog" aria-label="Edit task">
+    <div class="modal-content">
+      <button class="modal-close" id="closeModal" aria-label="Close edit dialog">&times;</button>
+      <h3>Edit Task</h3>
+      <form id="editForm" novalidate>
+        <input type="hidden" id="editId" />
+        <div class="form-row">
+          <label for="editTitle">Title</label>
+          <input id="editTitle" required maxlength="100" />
+        </div>
+
+        <div class="form-row">
+          <label for="editDescription">Description</label>
+          <textarea id="editDescription" rows="3"></textarea>
+        </div>
+
+        <div class="form-row split">
+          <div>
+            <label for="editDueDate">Due Date</label>
+            <input id="editDueDate" type="date" />
+          </div>
+
+          <div>
+            <label for="editPriority">Priority</label>
+            <select id="editPriority">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="editStatus">Status</label>
+          <select id="editStatus">
+            <option value="todo">To Do</option>
+            <option value="inprogress">In Progress</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+
+        <div class="form-row actions">
+          <button class="btn" id="saveEdit">Save</button>
+          <button type="button" class="btn secondary" id="cancelEdit">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <p><strong>Task Manager App</strong></p>
+        <p>Plan smart. Work smarter.</p>
+      </div>
+      <div class="footer-col">
+        <p><strong>Contact Us</strong></p>
+        <p>📞 0112419739</p>
+        <p>✉ taskmanager@gmail.com</p>
+      </div>
+      <div class="footer-col">
+        <p><strong>Follow Us</strong></p>
+        <div class="social-icons">
+          <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
