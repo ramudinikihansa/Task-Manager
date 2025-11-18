@@ -11,17 +11,20 @@
 <body>
   <header class="site-header">
     <div class="container header-grid">
-      <img class="logo" src="assets/Black___White_Minimalist_Business_Logo__1_-removebg-preview.png"> 
+      <img class="logo" src="assets/Black___White_Minimalist_Business_Logo__1_-removebg-preview.png" alt="Task Manager"> 
       <nav aria-label="Main navigation">
         <ul class="nav">
           <li><a href="#homepage"><b>Home</b></a></li>
           <li><a href="#add"><b>Add Task</b></a></li>
+          <button id="logoutBtn" class="btn secondary">Logout</button>
         </ul>
       </nav>
+      
     </div>
   </header>
 
   <main class="container" id="homepage">
+
     <section class="controls">
       <div class="search-wrap">
         <input id="searchInput" type="search" placeholder="Search by title or description..." aria-label="Search tasks">
@@ -102,6 +105,7 @@
     </section>
   </main>
 
+
   <div id="editModal" class="modal" aria-hidden="true" role="dialog" aria-label="Edit task">
     <div class="modal-content">
       <button class="modal-close" id="closeModal" aria-label="Close edit dialog">&times;</button>
@@ -173,6 +177,17 @@
     </div>
   </footer>
 
+  <script>
+    const loggedIn = localStorage.getItem('taskmanager.loggedIn');
+    if (!loggedIn) {
+      window.location.href = 'login.html';
+    }
+    const logoutBtn = document.getElementById('logoutBtn');
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('taskmanager.loggedIn');
+      window.location.href = 'login.html';
+    });
+  </script>
   <script src="script.js" defer></script>
 </body>
 </html>

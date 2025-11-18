@@ -1,11 +1,10 @@
-/* Task Manager — script.js
-   Stores tasks in localStorage. Basic CRUD with filtering & search.
-*/
+
+
 
 const STORAGE_KEY = 'taskmanager.tasks.v1';
 let tasks = [];
 
-/* ---------- Helpers ---------- */
+
 const $ = (sel, root=document) => root.querySelector(sel);
 const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 
@@ -20,7 +19,7 @@ function loadTasks() {
   tasks = raw ? JSON.parse(raw) : [];
 }
 
-/* ---------- Rendering ---------- */
+
 const taskListEl = $('#taskList');
 const noTasksEl = $('#noTasks');
 
@@ -73,7 +72,7 @@ function renderTasks() {
   });
 }
 
-/* ---------- Filters & Search ---------- */
+
 const searchInput = $('#searchInput');
 const statusFilter = $('#statusFilter');
 const priorityFilter = $('#priorityFilter');
@@ -106,7 +105,7 @@ function applyFilters(list) {
   });
 }
 
-/* ---------- Add Task ---------- */
+
 const taskForm = $('#taskForm');
 taskForm.addEventListener('submit', e => {
   e.preventDefault();
@@ -124,7 +123,6 @@ taskForm.addEventListener('submit', e => {
   document.querySelector('main').scrollIntoView({behavior:'smooth'});
 });
 
-/* ---------- Edit Task (modal) ---------- */
 const editModal = $('#editModal');
 const closeModalBtn = $('#closeModal');
 const editForm = $('#editForm');
@@ -169,15 +167,12 @@ editForm.addEventListener('submit', e => {
 
 $('#cancelEdit').addEventListener('click', closeEditModal);
 
-/* ---------- Delete ---------- */
 function deleteTask(id) {
   if (!confirm('Delete this task permanently?')) return;
   tasks = tasks.filter(t => t.id !== id);
   saveTasks();
   renderTasks();
 }
-
-/* ---------- Event Delegation for Edit/Delete ---------- */
 taskListEl.addEventListener('click', (e) => {
   const id = e.target.dataset.id;
   if (!id) return;
@@ -189,7 +184,6 @@ taskListEl.addEventListener('click', (e) => {
   }
 });
 
-/* ---------- Clear Filters ---------- */
 clearFiltersBtn.addEventListener('click', () => {
   searchInput.value = '';
   statusFilter.value = 'all';
@@ -198,7 +192,6 @@ clearFiltersBtn.addEventListener('click', () => {
   renderTasks();
 });
 
-/* ---------- Live filters ---------- */
 ['input','change'].forEach(ev => {
   searchInput.addEventListener(ev, renderTasks);
   statusFilter.addEventListener(ev, renderTasks);
@@ -206,12 +199,10 @@ clearFiltersBtn.addEventListener('click', () => {
   dateFilter.addEventListener(ev, renderTasks);
 });
 
-/* ---------- Init ---------- */
 function init() {
   loadTasks();
   renderTasks();
 
-  // demo tasks if empty
   if (tasks.length === 0) {
     const demo = [
       { id: uid(), title: 'Submit assignment', description: 'Prepare and submit ICT1209 assignment', dueDate: '', priority: 'high', status: 'todo', createdAt: new Date().toISOString() },
@@ -224,12 +215,10 @@ function init() {
   }
 }
 
-/* Close modal when clicking outside content */
 editModal.addEventListener('click', (e) => {
   if (e.target === editModal) closeEditModal();
 });
 
-/* Keyboard accessibility */
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeEditModal();
 });
